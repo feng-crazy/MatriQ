@@ -33,6 +33,11 @@ class Settings(BaseSettings):
         default=[".jpg", ".jpeg", ".png"], validation_alias="ALLOWED_EXTENSIONS"
     )
     max_upload_mb: int = Field(default=15, validation_alias="MAX_UPLOAD_MB")
+    
+    # 日志配置
+    log_level: str = Field(default="DEBUG", validation_alias="LOG_LEVEL")
+    log_file: str = Field(default="app.log", validation_alias="LOG_FILE")
+    enable_file_logging: bool = Field(default=True, validation_alias="ENABLE_FILE_LOGGING")
 
     @field_validator("allowed_extensions", mode="before")
     @classmethod
