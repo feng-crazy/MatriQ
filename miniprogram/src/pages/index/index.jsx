@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { View, Button, Text, Image } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import './index.scss'

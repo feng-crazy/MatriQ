@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: matriq-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_NAME=MatriQ OCR Service
+      - API_PREFIX=/api/v1
+      - SQLITE_PATH=/app/data/matriq.db
+      - PIPELINES_ROOT=/app/data/pipelines
+      - PADDLEOCR_API_URL=${PADDLEOCR_API_URL:-https://gfc197xb35lb0274.aistudio-app.com/layout-parsing}
+      - PADDLEOCR_TOKEN=${PADDLEOCR_TOKEN}
+      - MAX_UPLOAD_MB=15
+    volumes:
+      - ./backend/data:/app/data
+      - ./backend/.env:/app/.env:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # 可选：Nginx 反向代理
+  nginx:
+    image: nginx:alpine
+    container_name: matriq-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - backend
+    restart: unless-stopped
+    profiles:
+      - production
+

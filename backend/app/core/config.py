@@ -21,7 +21,7 @@ class Settings(BaseSettings):
         validation_alias="PADDLEOCR_API_URL",
     )
     paddleocr_token: str = Field(
-        default="8c391ed980f8414fb28780e963691ae654ac30ad", validation_alias="PADDLEOCR_TOKEN"
+        default="your-token-here", validation_alias="PADDLEOCR_TOKEN"
     )
     
     # 兼容旧配置（可选）

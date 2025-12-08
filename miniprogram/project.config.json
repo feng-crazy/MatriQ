@@ -16,10 +16,17 @@
   },
   "compileType": "miniprogram",
   "simulatorPluginLibVersion": {},
-  "packOptions": {
+    "packOptions": {
     "ignore": [],
-    "include": []
+    "include": [
+      {
+        "type": "glob",
+        "pattern": "src/assets/**",
+        "value": "src/assets/**"
+      }
+    ]
   },
-  "appid": "wx138ca096aafd15f8",
-  "editorSetting": {}
+  "appid": "****",
+  "editorSetting": {},
+  "miniprogramRoot": "./dist"
 }

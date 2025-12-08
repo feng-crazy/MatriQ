@@ -16,15 +16,10 @@ const config = {
   outputRoot: 'dist',
   plugins: [],
   defineConstants: {},
-  copy: {
-    patterns: [],
-    options: {}
-  },
   framework: 'react',
   compiler: 'webpack5',
   cache: {
-    enable: true,
-    cacheDir: '.taro-cache'
+    type: 'memory'
   },
   // 根据环境变量设置是否启用 sourceMap
   terser: {
@@ -37,6 +32,11 @@ const config = {
     }
   },
   mini: {
+    copy: {
+      patterns: [
+        { from: 'src/assets/', to: 'dist/src/assets/' }
+      ]
+    },
     postcss: {
       pxtransform: {
         enable: true,
@@ -55,6 +55,10 @@ const config = {
           generateScopedName: '[name]__[local]___[hash:base64:5]'
         }
       }
+    },
+    // 添加别名配置
+    alias: {
+      '@': require('path').resolve(__dirname, '../src')
     }
   },
   h5: {
@@ -72,6 +76,10 @@ const config = {
           generateScopedName: '[name]__[local]___[hash:base64:5]'
         }
       }
+    },
+    // 添加别名配置
+    alias: {
+      '@': require('path').resolve(__dirname, '../src')
     }
   }
 }
@@ -82,4 +90,3 @@ module.exports = function (merge) {
   }
   return merge({}, config, require('./prod'))
 }
-
